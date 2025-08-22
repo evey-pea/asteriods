@@ -3,6 +3,7 @@ environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 # this allows us to use code from
 # the open-source pygame library
 # throughout this file
+import sys
 import pygame
 from constants import *
 from player import Player
@@ -31,13 +32,18 @@ def main():
     
     dt = 0
     
-    while pygame.get_init():
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         
         updatable.update(dt)
         
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                print("Game over!")
+                sys.exit()
+
         # Render Screen and sprites
         screen.fill("black")
         
